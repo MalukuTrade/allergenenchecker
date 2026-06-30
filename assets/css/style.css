@@ -1,0 +1,1031 @@
+/* ============================================================
+   allergenenchecker.nl — Stylesheet
+   Mobile-first, geen externe dependencies
+   ============================================================ */
+
+/* ── Design tokens ─────────────────────────────────────────── */
+:root {
+  --groen:        #2d7a4f;
+  --groen-donker: #1e5c3b;
+  --groen-licht:  #e8f5ee;
+  --groen-rand:   #c3e6d3;
+  --oranje:       #e67e22;
+  --rood:         #c0392b;
+  --rood-licht:   #fdecea;
+  --geel:         #f39c12;
+  --geel-licht:   #fef9e7;
+  --blauw:        #2980b9;
+  --paars:        #8e44ad;
+  --grijs-1:      #f8f9fa;
+  --grijs-2:      #e9ecef;
+  --grijs-3:      #dee2e6;
+  --grijs-4:      #6c757d;
+  --grijs-5:      #343a40;
+  --tekst:        #212529;
+  --wit:          #ffffff;
+
+  --font:         system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono:    'Courier New', Courier, monospace;
+
+  --radius:       10px;
+  --radius-sm:    6px;
+  --schaduw:      0 2px 12px rgba(0,0,0,.08);
+  --schaduw-md:   0 4px 24px rgba(0,0,0,.12);
+  --transitie:    .18s ease;
+
+  --max-breedte:  1140px;
+  --zijmarge:     1rem;
+}
+
+/* ── Reset & basis ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--tekst);
+  background: var(--wit);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main { flex: 1; }
+
+img, svg { max-width: 100%; display: block; }
+
+a { color: var(--groen); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+h1, h2, h3, h4 { line-height: 1.25; font-weight: 700; color: var(--grijs-5); }
+h1 { font-size: clamp(1.5rem, 4vw, 2.25rem); }
+h2 { font-size: clamp(1.25rem, 3vw, 1.75rem); }
+h3 { font-size: 1.1rem; }
+
+p { margin-bottom: .75rem; }
+p:last-child { margin-bottom: 0; }
+
+ul, ol { padding-left: 1.25rem; }
+li { margin-bottom: .25rem; }
+
+/* ── Layout helpers ────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: var(--max-breedte);
+  margin: 0 auto;
+  padding: 0 var(--zijmarge);
+}
+
+.sectie { padding: 3rem 0; }
+.sectie-alt { background: var(--grijs-1); }
+
+.rij {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.kolom { flex: 1; min-width: 280px; }
+
+/* ── Navigatie ─────────────────────────────────────────────── */
+.site-nav {
+  background: var(--wit);
+  border-bottom: 2px solid var(--groen-rand);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  gap: 1rem;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--groen);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.nav-logo span.emoji { font-size: 1.3rem; }
+
+.nav-links {
+  display: none;
+  list-style: none;
+  padding: 0;
+  gap: .25rem;
+}
+
+.nav-links a {
+  display: block;
+  padding: .4rem .75rem;
+  border-radius: var(--radius-sm);
+  color: var(--grijs-5);
+  font-size: .9rem;
+  font-weight: 500;
+  transition: background var(--transitie), color var(--transitie);
+}
+
+.nav-links a:hover,
+.nav-links a.actief {
+  background: var(--groen-licht);
+  color: var(--groen);
+  text-decoration: none;
+}
+
+.nav-hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: .5rem;
+  border-radius: var(--radius-sm);
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--grijs-5);
+  border-radius: 2px;
+  transition: var(--transitie);
+}
+
+.nav-mobiel {
+  display: none;
+  background: var(--wit);
+  border-top: 1px solid var(--grijs-3);
+  padding: .5rem 0 1rem;
+}
+
+.nav-mobiel.open { display: block; }
+
+.nav-mobiel ul {
+  list-style: none;
+  padding: 0;
+}
+
+.nav-mobiel a {
+  display: block;
+  padding: .6rem var(--zijmarge);
+  color: var(--grijs-5);
+  font-size: 1rem;
+  font-weight: 500;
+  border-left: 3px solid transparent;
+  transition: var(--transitie);
+}
+
+.nav-mobiel a:hover,
+.nav-mobiel a.actief {
+  color: var(--groen);
+  border-left-color: var(--groen);
+  background: var(--groen-licht);
+  text-decoration: none;
+}
+
+/* ── Hero / bovenste sectie ────────────────────────────────── */
+.hero {
+  background: linear-gradient(135deg, var(--groen) 0%, var(--groen-donker) 100%);
+  color: var(--wit);
+  padding: 2.5rem 0 2rem;
+}
+
+.hero h1 { color: var(--wit); margin-bottom: .5rem; }
+
+.hero .ondertitel {
+  opacity: .88;
+  font-size: 1.05rem;
+  margin-bottom: 0;
+}
+
+/* ── Zoekkaart ─────────────────────────────────────────────── */
+.zoek-kaart {
+  background: var(--wit);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--schaduw-md);
+  margin-top: 1.5rem;
+}
+
+.zoek-rij {
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+}
+
+.zoek-input {
+  flex: 1;
+  min-width: 200px;
+  padding: .75rem 1rem;
+  font-size: 1rem;
+  border: 2px solid var(--grijs-3);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transitie);
+  font-family: var(--font);
+}
+
+.zoek-input:focus {
+  outline: none;
+  border-color: var(--groen);
+  box-shadow: 0 0 0 3px rgba(45, 122, 79, .15);
+}
+
+.zoek-input::placeholder { color: var(--grijs-4); }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .75rem 1.25rem;
+  font-size: .95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--transitie), transform .1s;
+  font-family: var(--font);
+  white-space: nowrap;
+}
+
+.btn:active { transform: scale(.98); }
+
+.btn-groen {
+  background: var(--groen);
+  color: var(--wit);
+}
+
+.btn-groen:hover { background: var(--groen-donker); }
+
+.btn-outline {
+  background: transparent;
+  color: var(--groen);
+  border: 2px solid var(--groen);
+}
+
+.btn-outline:hover { background: var(--groen-licht); }
+
+.zoek-resultaten {
+  margin-top: 1rem;
+  min-height: 0;
+}
+
+.lege-staat {
+  text-align: center;
+  color: var(--grijs-4);
+  padding: 1.5rem 0;
+  font-size: .95rem;
+}
+
+/* ── Resultatenkaart ───────────────────────────────────────── */
+.resultaat-kaart {
+  background: var(--wit);
+  border: 1px solid var(--grijs-3);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  margin-bottom: .75rem;
+  box-shadow: var(--schaduw);
+  animation: inSchuiven .18s ease;
+}
+
+@keyframes inSchuiven {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.resultaat-header {
+  display: flex;
+  align-items: flex-start;
+  gap: .75rem;
+  margin-bottom: .75rem;
+  flex-wrap: wrap;
+}
+
+.e-nummer-label {
+  background: var(--groen);
+  color: var(--wit);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: .2rem .7rem;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.resultaat-naam {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--grijs-5);
+}
+
+.resultaat-meta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: .25rem .75rem;
+  font-size: .9rem;
+  margin-bottom: .75rem;
+}
+
+.resultaat-meta dt {
+  font-weight: 600;
+  color: var(--grijs-4);
+}
+
+.resultaat-meta dd { color: var(--grijs-5); }
+
+.resultaat-info {
+  font-size: .88rem;
+  color: var(--grijs-4);
+  font-style: italic;
+  margin-bottom: .75rem;
+}
+
+/* ── Allergenen badges ─────────────────────────────────────── */
+.allergenen-rij {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+}
+
+.allergen-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  padding: .25rem .6rem;
+  border-radius: 20px;
+  font-size: .78rem;
+  font-weight: 600;
+  border: 1.5px solid transparent;
+  transition: opacity var(--transitie);
+}
+
+.allergen-badge.inactief {
+  background: var(--grijs-2);
+  color: var(--grijs-4);
+  border-color: var(--grijs-3);
+  opacity: .55;
+}
+
+.allergen-badge .badge-icon { font-size: .9rem; }
+
+/* actieve badges krijgen kleur via inline style vanuit JS */
+
+/* ── Scanner sectie ────────────────────────────────────────── */
+.scanner-sectie {
+  padding: 2.5rem 0;
+}
+
+.scanner-sectie h2 { margin-bottom: .5rem; }
+
+.scanner-intro {
+  color: var(--grijs-4);
+  margin-bottom: 1rem;
+}
+
+.scanner-textarea {
+  width: 100%;
+  min-height: 130px;
+  padding: .85rem 1rem;
+  font-size: .95rem;
+  font-family: var(--font);
+  border: 2px solid var(--grijs-3);
+  border-radius: var(--radius-sm);
+  resize: vertical;
+  transition: border-color var(--transitie);
+  line-height: 1.5;
+}
+
+.scanner-textarea:focus {
+  outline: none;
+  border-color: var(--groen);
+  box-shadow: 0 0 0 3px rgba(45, 122, 79, .15);
+}
+
+.scanner-textarea::placeholder { color: var(--grijs-4); }
+
+.scanner-knoppen {
+  display: flex;
+  gap: .5rem;
+  margin-top: .75rem;
+  flex-wrap: wrap;
+}
+
+.scan-output {
+  margin-top: 1.25rem;
+  padding: 1rem;
+  background: var(--grijs-1);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--grijs-3);
+  font-size: .95rem;
+  line-height: 1.9;
+  word-break: break-word;
+  display: none;
+}
+
+.scan-output.zichtbaar { display: block; }
+
+.scan-token { border-radius: 4px; padding: 1px 4px; }
+.scan-token.e-nummer  { background: #fff3cd; color: #856404; font-weight: 600; border: 1px solid #ffc107; }
+.scan-token.allergen  { background: var(--rood-licht); color: var(--rood); font-weight: 700; border: 1px solid #f5c6cb; }
+.scan-token.normaal   { color: var(--tekst); }
+
+.scan-samenvatting {
+  margin-top: 1rem;
+  display: none;
+}
+
+.scan-samenvatting.zichtbaar { display: block; }
+
+.samenvatting-kaart {
+  background: var(--wit);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  border-left: 4px solid var(--groen);
+  box-shadow: var(--schaduw);
+}
+
+.samenvatting-kaart.heeft-allergenen {
+  border-left-color: var(--rood);
+  background: var(--rood-licht);
+}
+
+.samenvatting-titel {
+  font-weight: 700;
+  margin-bottom: .5rem;
+  font-size: 1rem;
+}
+
+.samenvatting-gevonden {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin-top: .5rem;
+}
+
+/* ── EU-allergenen grid (index) ────────────────────────────── */
+.allergenen-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: .75rem;
+  margin-top: 1.25rem;
+}
+
+.allergen-kaartje {
+  background: var(--wit);
+  border: 1.5px solid var(--grijs-3);
+  border-radius: var(--radius);
+  padding: .85rem .75rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color var(--transitie), box-shadow var(--transitie), transform .1s;
+  text-decoration: none;
+  color: var(--tekst);
+  display: block;
+}
+
+.allergen-kaartje:hover {
+  border-color: var(--groen);
+  box-shadow: var(--schaduw);
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+.allergen-kaartje .icon { font-size: 2rem; margin-bottom: .35rem; display: block; }
+.allergen-kaartje .naam { font-size: .82rem; font-weight: 600; color: var(--grijs-5); }
+
+/* ── FAQ sectie ────────────────────────────────────────────── */
+.faq-sectie { padding: 3rem 0; }
+
+.faq-lijst { margin-top: 1.5rem; }
+
+.faq-item {
+  border: 1px solid var(--grijs-3);
+  border-radius: var(--radius-sm);
+  margin-bottom: .6rem;
+  overflow: hidden;
+}
+
+.faq-vraag {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--wit);
+  border: none;
+  width: 100%;
+  text-align: left;
+  font-size: .95rem;
+  color: var(--grijs-5);
+  font-family: var(--font);
+  transition: background var(--transitie);
+  gap: .75rem;
+}
+
+.faq-vraag:hover { background: var(--grijs-1); }
+.faq-vraag.open  { background: var(--groen-licht); color: var(--groen); }
+
+.faq-icoontje {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--groen);
+  color: var(--wit);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .85rem;
+  transition: transform var(--transitie);
+}
+
+.faq-vraag.open .faq-icoontje { transform: rotate(45deg); }
+
+.faq-antwoord {
+  display: none;
+  padding: 0 1.25rem 1rem;
+  font-size: .93rem;
+  color: var(--grijs-5);
+  line-height: 1.65;
+}
+
+.faq-antwoord.open { display: block; }
+
+/* ── E-nummers tabel (e-nummers.html) ──────────────────────── */
+.filter-knoppen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin-bottom: 1.5rem;
+}
+
+.filter-btn {
+  padding: .4rem .9rem;
+  border: 1.5px solid var(--grijs-3);
+  border-radius: 20px;
+  background: var(--wit);
+  font-size: .85rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--grijs-5);
+  transition: var(--transitie);
+  font-family: var(--font);
+}
+
+.filter-btn:hover,
+.filter-btn.actief {
+  background: var(--groen);
+  color: var(--wit);
+  border-color: var(--groen);
+}
+
+.categorie-blok {
+  margin-bottom: 2.5rem;
+}
+
+.categorie-titel {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: 1rem;
+  padding-bottom: .5rem;
+  border-bottom: 2px solid var(--groen-rand);
+}
+
+.categorie-range {
+  background: var(--groen-licht);
+  color: var(--groen);
+  font-size: .8rem;
+  font-weight: 600;
+  padding: .2rem .6rem;
+  border-radius: 20px;
+}
+
+.e-tabel {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .88rem;
+}
+
+.e-tabel th {
+  background: var(--grijs-1);
+  padding: .6rem .75rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--grijs-4);
+  border-bottom: 2px solid var(--grijs-3);
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+}
+
+.e-tabel td {
+  padding: .55rem .75rem;
+  border-bottom: 1px solid var(--grijs-2);
+  vertical-align: top;
+  color: var(--grijs-5);
+}
+
+.e-tabel tr:last-child td { border-bottom: none; }
+
+.e-tabel tr:hover td { background: var(--grijs-1); }
+
+.e-tabel .e-num {
+  font-weight: 700;
+  color: var(--groen);
+  white-space: nowrap;
+}
+
+.allergeen-chip {
+  display: inline-block;
+  background: var(--rood-licht);
+  color: var(--rood);
+  font-size: .75rem;
+  font-weight: 600;
+  padding: .1rem .45rem;
+  border-radius: 10px;
+  margin: .1rem;
+}
+
+/* ── Allergenen pagina ──────────────────────────────────────── */
+.allergen-detail-kaart {
+  background: var(--wit);
+  border-radius: var(--radius);
+  border: 1px solid var(--grijs-3);
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--schaduw);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+}
+
+.allergen-icon-groot {
+  font-size: 2.5rem;
+  display: flex;
+  align-items: flex-start;
+  padding-top: .2rem;
+}
+
+.allergen-detail-kaart h3 {
+  margin-bottom: .4rem;
+  color: var(--groen-donker);
+}
+
+.allergen-detail-kaart .beschrijving {
+  color: var(--grijs-5);
+  font-size: .93rem;
+  margin-bottom: .75rem;
+}
+
+.voorbeeld-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+}
+
+.voorbeeld-chip {
+  background: var(--groen-licht);
+  color: var(--groen-donker);
+  font-size: .8rem;
+  padding: .2rem .6rem;
+  border-radius: 20px;
+  border: 1px solid var(--groen-rand);
+}
+
+/* ── Horeca pagina ──────────────────────────────────────────── */
+.info-kaart {
+  background: var(--wit);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  border-left: 4px solid var(--groen);
+  box-shadow: var(--schaduw);
+  margin-bottom: 1.25rem;
+}
+
+.info-kaart.waarschuwing { border-left-color: var(--geel); background: var(--geel-licht); }
+.info-kaart.gevaar       { border-left-color: var(--rood); background: var(--rood-licht); }
+
+.info-kaart h3 { color: var(--groen-donker); margin-bottom: .5rem; }
+.info-kaart.waarschuwing h3 { color: #7d5a00; }
+.info-kaart.gevaar h3       { color: var(--rood); }
+
+.checklist {
+  list-style: none;
+  padding: 0;
+}
+
+.checklist li {
+  padding: .4rem 0;
+  padding-left: 1.6rem;
+  position: relative;
+  border-bottom: 1px solid var(--grijs-2);
+  font-size: .93rem;
+}
+
+.checklist li:last-child { border-bottom: none; }
+
+.checklist li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--groen);
+  font-weight: 700;
+}
+
+.wetgeving-blok {
+  background: var(--grijs-1);
+  border: 1px solid var(--grijs-3);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.wetgeving-blok .wet-label {
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--grijs-4);
+  margin-bottom: .25rem;
+}
+
+/* ── Privacy pagina ─────────────────────────────────────────── */
+.privacy-sectie {
+  max-width: 820px;
+}
+
+.privacy-sectie h2 {
+  font-size: 1.2rem;
+  margin-top: 2rem;
+  margin-bottom: .5rem;
+  color: var(--groen-donker);
+  padding-top: 1rem;
+  border-top: 1px solid var(--grijs-3);
+}
+
+.privacy-sectie h2:first-of-type {
+  border-top: none;
+  margin-top: 1rem;
+}
+
+.privacy-sectie p, .privacy-sectie ul {
+  font-size: .93rem;
+  color: var(--grijs-5);
+  margin-bottom: .75rem;
+}
+
+/* ── Informatieve banners ───────────────────────────────────── */
+.banner {
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1rem;
+  font-size: .9rem;
+}
+
+.banner-info {
+  background: #e3f2fd;
+  color: #1565c0;
+  border-left: 4px solid #1976d2;
+}
+
+.banner-waarschuwing {
+  background: var(--geel-licht);
+  color: #7d5a00;
+  border-left: 4px solid var(--geel);
+}
+
+/* ── Paginakoptekst ─────────────────────────────────────────── */
+.pagina-header {
+  background: var(--groen);
+  color: var(--wit);
+  padding: 2rem 0 1.75rem;
+}
+
+.pagina-header h1 { color: var(--wit); margin-bottom: .4rem; }
+
+.pagina-header .subtekst {
+  opacity: .85;
+  font-size: 1rem;
+}
+
+/* ── Broodkruimelnavigatie ──────────────────────────────────── */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-size: .85rem;
+  color: rgba(255,255,255,.75);
+  margin-bottom: .75rem;
+  flex-wrap: wrap;
+}
+
+.breadcrumb a { color: rgba(255,255,255,.85); }
+.breadcrumb a:hover { color: var(--wit); }
+.breadcrumb .scheider { opacity: .5; }
+
+/* ── Kaartjes grid ──────────────────────────────────────────── */
+.kaartjes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.kaartje {
+  background: var(--wit);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  border: 1px solid var(--grijs-3);
+  box-shadow: var(--schaduw);
+  transition: box-shadow var(--transitie), transform .1s;
+}
+
+.kaartje:hover {
+  box-shadow: var(--schaduw-md);
+  transform: translateY(-2px);
+}
+
+/* ── Statistiekenrij ─────────────────────────────────────────── */
+.stats-rij {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.stat-item {
+  background: var(--wit);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--grijs-3);
+  text-align: center;
+  flex: 1;
+  min-width: 120px;
+}
+
+.stat-getal {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--groen);
+  display: block;
+}
+
+.stat-label {
+  font-size: .8rem;
+  color: var(--grijs-4);
+  margin-top: .15rem;
+}
+
+/* ── Footer ─────────────────────────────────────────────────── */
+.site-footer {
+  background: var(--grijs-5);
+  color: rgba(255,255,255,.75);
+  padding: 2rem 0;
+  margin-top: auto;
+}
+
+.footer-rij {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.footer-kolom h4 {
+  color: var(--wit);
+  font-size: .9rem;
+  margin-bottom: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+.footer-kolom ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-kolom li { margin-bottom: .4rem; }
+
+.footer-kolom a {
+  color: rgba(255,255,255,.65);
+  font-size: .88rem;
+  transition: color var(--transitie);
+}
+
+.footer-kolom a:hover { color: var(--wit); text-decoration: none; }
+
+.footer-bodem {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: .75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255,255,255,.1);
+  font-size: .82rem;
+}
+
+.footer-disclaimer {
+  max-width: 600px;
+  opacity: .6;
+  font-size: .8rem;
+  margin-top: .5rem;
+  line-height: 1.5;
+}
+
+/* ── Geen resultaten / lege states ──────────────────────────── */
+.geen-resultaten {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--grijs-4);
+}
+
+.geen-resultaten .icon { font-size: 2.5rem; margin-bottom: .5rem; }
+
+/* ── Responsive: tablet en desktop ─────────────────────────── */
+@media (min-width: 640px) {
+  :root { --zijmarge: 1.5rem; }
+
+  .zoek-rij { flex-wrap: nowrap; }
+  .zoek-input { min-width: unset; }
+}
+
+@media (min-width: 768px) {
+  :root { --zijmarge: 2rem; }
+
+  .nav-hamburger { display: none; }
+  .nav-links {
+    display: flex;
+    align-items: center;
+  }
+
+  .allergen-detail-kaart {
+    grid-template-columns: 3.5rem 1fr;
+  }
+
+  .rij { flex-wrap: nowrap; }
+}
+
+@media (min-width: 1024px) {
+  :root { --zijmarge: 2.5rem; }
+
+  .hero { padding: 3.5rem 0 2.5rem; }
+
+  .stats-rij { flex-wrap: nowrap; }
+}
+
+/* ── CSS-aliassen voor gegenereerde klassen ─────────────────── */
+.hero-sectie  { background: linear-gradient(135deg, var(--groen) 0%, var(--groen-donker) 100%); color: var(--wit); padding: 2.5rem 0 2rem; }
+.hero-titel   { color: var(--wit); font-size: clamp(1.5rem, 4vw, 2.25rem); font-weight: 700; line-height: 1.25; margin-bottom: .5rem; }
+.hero-subtitel, .hero .ondertitel { opacity: .88; font-size: 1.05rem; color: var(--wit); }
+
+.zoek-sectie  { padding: 2rem 0; }
+.zoek-knop    { display: inline-flex; align-items: center; gap: .4rem; padding: .75rem 1.25rem; font-size: .95rem; font-weight: 600; border: none; border-radius: var(--radius-sm); cursor: pointer; background: var(--groen); color: var(--wit); font-family: var(--font); transition: background var(--transitie); }
+.zoek-knop:hover { background: var(--groen-donker); }
+.zoek-label   { display: block; font-weight: 600; margin-bottom: .5rem; color: var(--grijs-5); }
+
+.scanner-kaart { background: var(--wit); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--schaduw); }
+.scanner-titel { font-size: clamp(1.25rem, 3vw, 1.75rem); font-weight: 700; margin-bottom: .5rem; color: var(--grijs-5); }
+
+.scanner-sectie, .scan-sectie { padding: 2.5rem 0; background: var(--grijs-1); }
+
+.stats-sectie  { padding: 2rem 0; }
+.stats-section { padding: 2rem 0; }
+
+.knop-primair { display: inline-flex; align-items: center; gap: .4rem; padding: .75rem 1.25rem; font-size: .95rem; font-weight: 600; border: none; border-radius: var(--radius-sm); cursor: pointer; background: var(--groen); color: var(--wit); font-family: var(--font); transition: background var(--transitie); }
+.knop-primair:hover { background: var(--groen-donker); }
+.knop-ghost   { display: inline-flex; align-items: center; gap: .4rem; padding: .75rem 1.25rem; font-size: .95rem; font-weight: 600; border: 2px solid var(--groen); border-radius: var(--radius-sm); cursor: pointer; background: transparent; color: var(--groen); font-family: var(--font); transition: background var(--transitie); }
+.knop-ghost:hover { background: var(--groen-licht); }
+
+.nav-link     { display: block; padding: .4rem .75rem; border-radius: var(--radius-sm); color: var(--grijs-5); font-size: .9rem; font-weight: 500; transition: background var(--transitie), color var(--transitie); }
+.nav-link:hover, .nav-link.actief { background: var(--groen-licht); color: var(--groen); text-decoration: none; }
+
+.nav-mobiel-overlay { display: none; background: var(--wit); border-top: 1px solid var(--grijs-3); padding: .5rem 0 1rem; }
+.nav-mobiel-overlay.open { display: block; }
+.nav-mobiel-overlay ul { list-style: none; padding: 0; }
+.nav-mobiel-overlay a  { display: block; padding: .6rem var(--zijmarge); color: var(--grijs-5); font-size: 1rem; font-weight: 500; border-left: 3px solid transparent; transition: var(--transitie); }
+.nav-mobiel-overlay a:hover, .nav-mobiel-overlay a.actief { color: var(--groen); border-left-color: var(--groen); background: var(--groen-licht); text-decoration: none; }
+
+.site-header  { position: sticky; top: 0; z-index: 100; background: var(--wit); border-bottom: 2px solid var(--groen-rand); box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.site-header .site-nav { max-width: var(--max-breedte); margin: 0 auto; padding: 0 var(--zijmarge); display: flex; align-items: center; justify-content: space-between; height: 60px; gap: 1rem; }
+
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+
+.faq-sectie h2, .faq-sectie .sectie-titel { margin-bottom: 1.5rem; }
+.allergenen-sectie { padding: 2rem 0; }
+.stats-divider { display: none; }

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alle E-nummers per Categorie | AllergenesChecker.nl</title>
+  <meta name="description" content="Overzicht van alle E-nummers per categorie: kleurstoffen (E100-E199), conserveermiddelen (E200-E299), antioxidanten en meer. Met allergeneninformatie.">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://allergenenchecker.nl/e-nummers.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://allergenenchecker.nl/e-nummers.html">
+  <meta property="og:title" content="Alle E-nummers per Categorie | AllergenesChecker.nl">
+  <meta property="og:description" content="Overzicht van alle E-nummers per categorie: kleurstoffen (E100-E199), conserveermiddelen (E200-E299), antioxidanten en meer. Met allergeneninformatie.">
+  <meta property="og:site_name" content="AllergenesChecker.nl">
+  <meta property="og:locale" content="nl_NL">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Alle E-nummers per Categorie | AllergenesChecker.nl">
+  <meta name="twitter:description" content="Overzicht van alle E-nummers per categorie: kleurstoffen, conserveermiddelen, antioxidanten en meer. Met allergeneninformatie.">
+
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<!-- ── Navigatie ──────────────────────────────────────────────────── -->
+<nav class="site-nav" aria-label="Hoofdnavigatie">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="AllergenesChecker.nl — home">
+        <span class="emoji" aria-hidden="true">🔍</span>
+        AllergenesChecker.nl
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="e-nummers.html" class="actief" aria-current="page">E-nummers</a></li>
+        <li><a href="allergenen.html">EU-Allergenen</a></li>
+        <li><a href="horeca.html">Horeca</a></li>
+        <li><a href="over-ons.html">Over ons</a></li>
+      </ul>
+
+      <button
+        class="nav-hamburger"
+        id="nav-hamburger"
+        aria-label="Menu openen"
+        aria-expanded="false"
+        aria-controls="nav-mobiel"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="nav-mobiel" id="nav-mobiel" aria-hidden="true">
+    <ul role="list">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="e-nummers.html" class="actief">E-nummers</a></li>
+      <li><a href="allergenen.html">EU-Allergenen</a></li>
+      <li><a href="horeca.html">Horeca</a></li>
+      <li><a href="over-ons.html">Over ons</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── Paginakoptekst ─────────────────────────────────────────────── -->
+<header class="pagina-header">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Broodkruimelnavigatie">
+      <a href="index.html">Home</a>
+      <span class="scheider" aria-hidden="true">›</span>
+      <span aria-current="page">E-nummers</span>
+    </nav>
+    <h1>E-nummers Overzicht</h1>
+    <p class="subtekst">Alle toegestane E-nummers in de EU, gegroepeerd per functie</p>
+  </div>
+</header>
+
+<!-- ── Hoofdinhoud ────────────────────────────────────────────────── -->
+<main id="hoofdinhoud">
+  <div class="sectie">
+    <div class="container">
+
+      <!-- Introductie -->
+      <p>
+        E-nummers zijn codes die de Europese Unie toekent aan goedgekeurde levensmiddelenadditieven —
+        stoffen die bewust worden toegevoegd aan voedsel om de smaak, kleur, textuur of houdbaarheid te
+        verbeteren. Elk E-nummer heeft een uitgebreide veiligheidsbeoordelingsprocedure doorlopen bij de
+        Europese Autoriteit voor Voedselveiligheid (EFSA) voordat het mag worden gebruikt. De nummering
+        is systematisch: de eerste cijfers geven de functiecategorie aan, zodat u in één oogopslag kunt
+        zien of een additief een kleurstof, conserveermiddel of smaakversterker is.
+      </p>
+
+      <!-- Statistieken -->
+      <div class="stats-rij" aria-label="Snelle statistieken">
+        <div class="stat-item">
+          <span class="stat-getal" id="stat-totaal">170+</span>
+          <div class="stat-label">E-nummers in database</div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-getal">8</span>
+          <div class="stat-label">Categorieën</div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-getal">14</span>
+          <div class="stat-label">EU-allergenen bewaakt</div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-getal">E100–E1520</span>
+          <div class="stat-label">Nummerbereik</div>
+        </div>
+      </div>
+
+      <!-- Informatiebanner -->
+      <div class="banner banner-info" role="note">
+        <strong>ℹ️ Tip:</strong> Gebruik de filterknopjes hieronder om alleen de gewenste categorie te tonen.
+        Klik op "Alle E-nummers" om het volledige overzicht te zien. De kolom <em>EU-Allergenen</em> toont
+        welke stoffen een van de 14 verplicht te vermelden allergenen bevatten.
+      </div>
+
+      <!-- Filterknoppen -->
+      <div class="filter-knoppen" role="group" aria-label="Filter op categorie">
+        <button class="filter-btn actief" data-filter="alle" type="button">
+          Alle E-nummers
+        </button>
+        <button class="filter-btn" data-filter="Kleurstoffen" type="button">
+          🎨 Kleurstoffen
+        </button>
+        <button class="filter-btn" data-filter="Conserveermiddelen" type="button">
+          🛡️ Conserveermiddelen
+        </button>
+        <button class="filter-btn" data-filter="Antioxidanten" type="button">
+          ⚗️ Antioxidanten
+        </button>
+        <button class="filter-btn" data-filter="Emulgatoren & Stabilisatoren" type="button">
+          🧪 Emulgatoren &amp; Stabilisatoren
+        </button>
+        <button class="filter-btn" data-filter="Smaakversterkers" type="button">
+          👅 Smaakversterkers
+        </button>
+        <button class="filter-btn" data-filter="Zoetstoffen" type="button">
+          🍬 Zoetstoffen
+        </button>
+        <button class="filter-btn" data-filter="Overige & Zetmeelderivaten" type="button">
+          🔬 Overige &amp; Zetmeelderivaten
+        </button>
+      </div>
+
+      <!-- Dynamische tabelcontainer — gevuld door app.js -->
+      <div id="e-nummers-container" aria-live="polite" aria-label="E-nummers per categorie">
+        <p class="lege-staat">Tabel wordt geladen…</p>
+      </div>
+
+      <!-- Informatieve banner onderaan -->
+      <div class="banner banner-info" role="note" style="margin-top: 2rem;">
+        <strong>📊 Database:</strong>
+        De tabel wordt automatisch gevuld vanuit onze database van 170+ E-nummers.
+        Alle informatie is gebaseerd op EU-verordening 1333/2008 en de bijlagen daarvan.
+        Raadpleeg bij twijfel altijd een arts of diëtist.
+      </div>
+
+      <!-- Uitlegblok categorieën -->
+      <section class="sectie-alt" style="margin-top: 2.5rem; padding: 1.75rem; border-radius: var(--radius);">
+        <h2 style="margin-bottom: 1rem;">Wat betekenen de categorienummers?</h2>
+        <div class="rij">
+          <div class="kolom">
+            <ul>
+              <li><strong>E100–E199</strong> — Kleurstoffen: geven of herstellen kleur in levensmiddelen.</li>
+              <li><strong>E200–E299</strong> — Conserveermiddelen: remmen bederf door micro-organismen.</li>
+              <li><strong>E300–E399</strong> — Antioxidanten en zuurteregelaars: voorkomen oxidatie en regelen de pH.</li>
+              <li><strong>E400–E499</strong> — Verdikkings-, geleer- en emulgeermiddelen: zorgen voor textuur en stabiliteit.</li>
+            </ul>
+          </div>
+          <div class="kolom">
+            <ul>
+              <li><strong>E500–E599</strong> — Zuurteregelaars en rijsmiddelen: regelen zuurgraad en laten deeg rijzen.</li>
+              <li><strong>E620–E650</strong> — Smaakversterkers: intensiveren de bestaande smaak van een product.</li>
+              <li><strong>E900–E999</strong> — Glansmiddelen, gassen en overige hulpstoffen.</li>
+              <li><strong>E1000+</strong> — Enzymen, gemodificeerde zetmelen en overige technologische hulpstoffen.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ sectie -->
+      <section class="faq-sectie" aria-labelledby="faq-titel">
+        <h2 id="faq-titel">Veelgestelde vragen over E-nummers</h2>
+        <div class="faq-lijst" id="faq-lijst">
+
+          <div class="faq-item">
+            <button class="faq-vraag" type="button" aria-expanded="false">
+              Zijn alle E-nummers kunstmatig?
+              <span class="faq-icoontje" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-antwoord" role="region">
+              Nee, lang niet. Veel E-nummers zijn van natuurlijke oorsprong. Zo is E300 (ascorbinezuur)
+              vitamine C, is E160a (bèta-caroteen) een pigment uit wortelen, en zijn E306–E309 vormen van
+              vitamine E. Ook E406 (agar-agar) en E407 (carrageen) zijn gewonnen uit zeewier. Het E-nummer
+              zegt niets over of iets synthetisch of natuurlijk is — het is slechts een goedkeuringscode.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-vraag" type="button" aria-expanded="false">
+              Zijn E-nummers gevaarlijk voor mijn gezondheid?
+              <span class="faq-icoontje" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-antwoord" role="region">
+              De EU staat alleen E-nummers toe die de EFSA (Europese Autoriteit voor Voedselveiligheid) als
+              veilig heeft beoordeeld bij normale gebruikshoeveelheden. Voor elk goedgekeurd additief is een
+              Aanvaardbare Dagelijkse Inname (ADI) vastgesteld. Dat gezegd hebbende, kunnen sommige mensen
+              gevoelig zijn voor specifieke additieven. Zo kunnen bepaalde azokleurstoffen (E102, E110, E122,
+              E124, E129, E151) bij gevoelige kinderen hyperactiviteit bevorderen — producten met deze
+              kleurstoffen zijn verplicht te voorzien van het label "kan de activiteit en aandacht bij kinderen
+              nadelig beïnvloeden".
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-vraag" type="button" aria-expanded="false">
+              Hoe herken ik op een etiket welke allergenen via E-nummers binnenkomen?
+              <span class="faq-icoontje" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-antwoord" role="region">
+              Fabrikanten zijn verplicht de 14 EU-allergenen vet of cursief te markeren in de
+              ingrediëntenlijst — ook als ze via een additief binnenkomen. Voorbeelden: E150d
+              (sulfietammoniumkaramel) bevat sulfiet, E322 (lecithine) kan soja bevatten, en E966 (lactitol)
+              is afgeleid van melksuiker. Gebruik de zoekfunctie op onze <a href="index.html">homepage</a>
+              om snel te zien of een specifiek E-nummer een allergen bevat.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-vraag" type="button" aria-expanded="false">
+              Waarom heeft E171 (titaandioxide) een speciale status?
+              <span class="faq-icoontje" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-antwoord" role="region">
+              In januari 2022 heeft de Europese Commissie het gebruik van E171 (titaandioxide) als
+              levensmiddelenadditief verboden. De EFSA concludeerde in 2021 dat titaandioxide niet langer
+              als veilig beschouwd kan worden, omdat genotoxiciteit (schade aan DNA) niet kan worden
+              uitgesloten. Dit verbod geldt voor levensmiddelen — in cosmetica en medicijnen gelden
+              afzonderlijke regels. In onze database staat E171 nog vermeld voor informatiedoeleinden.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-vraag" type="button" aria-expanded="false">
+              Wat zijn de verschillen tussen E621 (MSG) en andere smaakversterkers?
+              <span class="faq-icoontje" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-antwoord" role="region">
+              E621 (mononatriumglutamaat, MSG) is het meest bekende lid van de glutamaatfamilie (E620–E625).
+              Het geeft de umami-smaak door het stimuleren van specifieke smaakreceptoren op de tong.
+              E627 (dinatriumguanylaat) en E631 (dinatriuminosinaat) zijn nucleotiden die synergetisch werken
+              met MSG: de combinatie geeft een veel sterkere smaakversterking dan elk additief afzonderlijk.
+              Daarom ziet u op snacketiketten vaak "E621, E627, E631" naast elkaar staan. De EFSA heeft MSG
+              als veilig beoordeeld; het "Chinees restaurantsyndroom" is niet wetenschappelijk bevestigd.
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div><!-- /.container -->
+  </div><!-- /.sectie -->
+</main>
+
+<!-- ── Footer ─────────────────────────────────────────────────────── -->
+<footer class="site-footer" aria-labelledby="footer-titel">
+  <div class="container">
+    <div class="footer-rij">
+
+      <div class="footer-kolom">
+        <h4 id="footer-titel">AllergenesChecker.nl</h4>
+        <ul>
+          <li><a href="index.html">Home &amp; E-nummer zoeker</a></li>
+          <li><a href="e-nummers.html">E-nummers overzicht</a></li>
+          <li><a href="allergenen.html">EU-Allergenen (14 stoffen)</a></li>
+          <li><a href="horeca.html">Informatie voor horeca</a></li>
+          <li><a href="over-ons.html">Over ons</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-kolom">
+        <h4>Populaire E-nummers</h4>
+        <ul>
+          <li><a href="index.html?zoek=E621">E621 — MSG (smaakversterker)</a></li>
+          <li><a href="index.html?zoek=E330">E330 — Citroenzuur</a></li>
+          <li><a href="index.html?zoek=E471">E471 — Mono- en diglyceriden</a></li>
+          <li><a href="index.html?zoek=E951">E951 — Aspartaam</a></li>
+          <li><a href="index.html?zoek=E300">E300 — Vitamine C</a></li>
+          <li><a href="index.html?zoek=E322">E322 — Lecithine</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-kolom">
+        <h4>Categorieën</h4>
+        <ul>
+          <li><a href="e-nummers.html">Kleurstoffen (E100–E199)</a></li>
+          <li><a href="e-nummers.html">Conserveermiddelen (E200–E299)</a></li>
+          <li><a href="e-nummers.html">Antioxidanten (E300–E399)</a></li>
+          <li><a href="e-nummers.html">Emulgatoren (E400–E499)</a></li>
+          <li><a href="e-nummers.html">Smaakversterkers (E620–E650)</a></li>
+          <li><a href="e-nummers.html">Zoetstoffen (E950–E968)</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-kolom">
+        <h4>Juridisch</h4>
+        <ul>
+          <li><a href="privacy.html">Privacybeleid</a></li>
+          <li><a href="disclaimer.html">Disclaimer</a></li>
+          <li><a href="over-ons.html#contact">Contact</a></li>
+        </ul>
+      </div>
+
+    </div><!-- /.footer-rij -->
+
+    <div class="footer-bodem">
+      <div>
+        <span>&copy; 2025 AllergenesChecker.nl</span>
+      </div>
+      <div>
+        <p class="footer-disclaimer">
+          De informatie op deze website is uitsluitend bedoeld ter algemene voorlichting en vervangt geen
+          medisch of diëtistisch advies. Raadpleeg bij twijfel over allergieën of intoleranties altijd een
+          arts of gekwalificeerd diëtist. Wij aanvaarden geen aansprakelijkheid voor onjuistheden of
+          verouderde informatie.
+        </p>
+      </div>
+    </div>
+
+  </div><!-- /.container -->
+</footer>
+
+<!-- Scripts: database eerst, dan app-logica -->
+<script src="assets/js/database.js"></script>
+<script src="assets/js/app.js"></script>
+
+</body>
+</html>
