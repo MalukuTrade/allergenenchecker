@@ -434,11 +434,55 @@ function markeerActieveNavLink() {
   });
 }
 
+/* ── Tabbladen (index.html) ──────────────────────────────────── */
+
+function initTabs() {
+  const tabs   = document.querySelectorAll('.tab-knop');
+  const panels = document.querySelectorAll('.tab-panel');
+  if (!tabs.length) return;
+
+  function activeer(doel) {
+    tabs.forEach(t => {
+      const isActief = t === doel;
+      t.classList.toggle('actief', isActief);
+      t.setAttribute('aria-selected', isActief);
+    });
+    panels.forEach(p => {
+      const isActief = p.id === doel.getAttribute('aria-controls');
+      p.classList.toggle('actief', isActief);
+      p.hidden = !isActief;
+    });
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => activeer(tab));
+    tab.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        const lijst  = [...tabs];
+        const huidig = lijst.indexOf(document.activeElement);
+        const volgend = e.key === 'ArrowRight'
+          ? (huidig + 1) % lijst.length
+          : (huidig - 1 + lijst.length) % lijst.length;
+        lijst[volgend].focus();
+        activeer(lijst[volgend]);
+      }
+    });
+  });
+
+  // Als URL-parameter ?zoek= aanwezig is, open de zoektab direct
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('zoek') || params.get('q')) {
+    const zoekTab = document.getElementById('tab-zoek');
+    if (zoekTab) activeer(zoekTab);
+  }
+}
+
 /* ── Initialisatie ───────────────────────────────────────────── */
 
 document.addEventListener('DOMContentLoaded', () => {
   markeerActieveNavLink();
   initNav();
+  initTabs();
   initZoeker();
   initScanner();
   initFAQ();

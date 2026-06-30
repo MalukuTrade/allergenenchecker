@@ -383,6 +383,72 @@ li { margin-bottom: .25rem; }
 
 /* actieve badges krijgen kleur via inline style vanuit JS */
 
+/* ── Tools tabblad ─────────────────────────────────────────── */
+.hero { padding-bottom: 3.5rem; }   /* extra ruimte voor zwevende kaart */
+
+.tools-sectie {
+  margin-top: -2.25rem;             /* trekt kaart omhoog de hero in */
+  padding: 0 0 2.5rem;
+  position: relative;
+  z-index: 10;
+}
+
+.tools-kaart {
+  background: var(--wit);
+  border-radius: var(--radius);
+  box-shadow: var(--schaduw-md);
+  overflow: hidden;
+  border: 1px solid var(--grijs-3);
+}
+
+.tabs-nav {
+  display: flex;
+  background: var(--grijs-1);
+  border-bottom: 2px solid var(--grijs-3);
+}
+
+.tab-knop {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .45rem;
+  padding: .9rem .75rem;
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--grijs-4);
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  font-family: var(--font);
+  transition: color var(--transitie), background var(--transitie), border-color var(--transitie);
+  position: relative;
+  bottom: -2px;
+  white-space: nowrap;
+}
+
+.tab-knop:hover {
+  color: var(--groen);
+  background: var(--groen-licht);
+}
+
+.tab-knop.actief {
+  color: var(--groen);
+  background: var(--wit);
+  border-bottom-color: var(--groen);
+}
+
+.tab-panel {
+  padding: 1.5rem;
+  display: none;
+}
+
+.tab-panel.actief {
+  display: block;
+  animation: inSchuiven .15s ease;
+}
+
 /* ── Scanner sectie ────────────────────────────────────────── */
 .scanner-sectie {
   padding: 2.5rem 0;

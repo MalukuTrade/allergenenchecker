@@ -151,26 +151,79 @@
       </div>
     </section>
 
-    <!-- 2. ZOEKKAART -->
-    <section class="zoek-sectie">
+    <!-- 2. TOOLS TABBLAD -->
+    <section class="tools-sectie">
       <div class="container">
-        <div class="zoek-kaart">
-          <label for="zoek-input" class="zoek-label">E-nummer of ingrediënt opzoeken</label>
-          <div class="zoek-rij">
-            <input
-              type="search"
-              id="zoek-input"
-              class="zoek-input"
-              placeholder="Bijv. E621 of glutamaat..."
-              autocomplete="off"
-              aria-label="Zoek op E-nummer of naam"
+        <div class="tools-kaart">
+
+          <!-- Tab navigatie -->
+          <div class="tabs-nav" role="tablist" aria-label="Kies een tool">
+            <button
+              class="tab-knop"
+              id="tab-zoek"
+              role="tab"
+              aria-selected="false"
+              aria-controls="panel-zoek"
             >
-            <button class="zoek-knop" id="zoek-knop" aria-label="Zoeken">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              Zoeken
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              E-nummer opzoeken
+            </button>
+            <button
+              class="tab-knop actief"
+              id="tab-scan"
+              role="tab"
+              aria-selected="true"
+              aria-controls="panel-scan"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              Ingrediëntenlijst scannen
             </button>
           </div>
-          <div id="zoek-resultaten" class="zoek-resultaten" role="region" aria-live="polite" aria-label="Zoekresultaten"></div>
+
+          <!-- Panel 1: E-nummer zoeker (standaard verborgen) -->
+          <div id="panel-zoek" class="tab-panel" role="tabpanel" aria-labelledby="tab-zoek" hidden>
+            <label for="zoek-input" class="zoek-label">E-nummer of ingrediënt opzoeken</label>
+            <div class="zoek-rij">
+              <input
+                type="search"
+                id="zoek-input"
+                class="zoek-input"
+                placeholder="Bijv. E621 of glutamaat..."
+                autocomplete="off"
+                aria-label="Zoek op E-nummer of naam"
+              >
+              <button class="btn btn-groen" id="zoek-knop" aria-label="Zoeken">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                Zoeken
+              </button>
+            </div>
+            <div id="zoek-resultaten" class="zoek-resultaten" role="region" aria-live="polite" aria-label="Zoekresultaten"></div>
+          </div>
+
+          <!-- Panel 2: Ingrediëntenscanner (standaard actief) -->
+          <div id="panel-scan" class="tab-panel actief" role="tabpanel" aria-labelledby="tab-scan">
+            <p class="scanner-intro">
+              Kopieer de ingrediëntenlijst van een verpakking en plak deze hieronder. De scanner markeert automatisch alle E-nummers en toont welke EU-allergenen aanwezig zijn.
+            </p>
+            <label for="scan-input" class="sr-only">Ingrediëntenlijst</label>
+            <textarea
+              id="scan-input"
+              class="scanner-textarea"
+              placeholder="Plak hier de ingrediëntenlijst, bijv: water, suiker, E621, citroenzuur (E330), tarwebloem..."
+              rows="6"
+              aria-label="Plak de ingrediëntenlijst om te scannen"
+            ></textarea>
+            <div class="scanner-knoppen">
+              <button id="scan-btn" class="btn btn-groen">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                Scan ingrediënten
+              </button>
+              <button id="scan-wis" class="btn btn-outline">Wissen</button>
+            </div>
+            <div id="scan-samenvatting" class="scan-samenvatting" role="region" aria-live="polite" aria-label="Samenvatting scan"></div>
+            <div id="scan-output" class="scan-output" role="region" aria-live="polite" aria-label="Scanresultaten"></div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -271,38 +324,6 @@
 
         <div class="allergenen-cta">
           <a href="allergenen.html" class="knop-secundair">Meer over alle 14 allergenen →</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- 4. INGREDIËNTENSCANNER -->
-    <section class="scanner-sectie">
-      <div class="container">
-        <div class="scanner-kaart">
-          <h2 class="scanner-titel">Ingrediëntenlijst Scanner</h2>
-          <p class="scanner-intro">
-            Kopieer de ingrediëntenlijst van een verpakking en plak deze hieronder. De scanner zoekt automatisch naar E-nummers en allergeennamen en toont welke van de 14 EU-allergenen aanwezig zijn.
-          </p>
-
-          <label for="scan-input" class="sr-only">Ingrediëntenlijst</label>
-          <textarea
-            id="scan-input"
-            class="scanner-textarea"
-            placeholder="Plak hier de ingrediëntenlijst..."
-            rows="6"
-            aria-label="Plak de ingrediëntenlijst om te scannen"
-          ></textarea>
-
-          <div class="scanner-knoppen">
-            <button id="scan-btn" class="btn btn-groen">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-              Scan ingrediënten
-            </button>
-            <button id="scan-wis" class="btn btn-outline">Wissen</button>
-          </div>
-
-          <div id="scan-samenvatting" class="scan-samenvatting" role="region" aria-live="polite" aria-label="Samenvatting scan"></div>
-          <div id="scan-output" class="scan-output" role="region" aria-live="polite" aria-label="Scanresultaten"></div>
         </div>
       </div>
     </section>
