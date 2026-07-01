@@ -159,16 +159,6 @@
           <!-- Tab navigatie -->
           <div class="tabs-nav" role="tablist" aria-label="Kies een tool">
             <button
-              class="tab-knop"
-              id="tab-zoek"
-              role="tab"
-              aria-selected="false"
-              aria-controls="panel-zoek"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              E-nummer opzoeken
-            </button>
-            <button
               class="tab-knop actief"
               id="tab-scan"
               role="tab"
@@ -177,6 +167,16 @@
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
               Ingrediëntenlijst scannen
+            </button>
+            <button
+              class="tab-knop"
+              id="tab-zoek"
+              role="tab"
+              aria-selected="false"
+              aria-controls="panel-zoek"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              E-nummer opzoeken
             </button>
           </div>
 
@@ -203,8 +203,22 @@
           <!-- Panel 2: Ingrediëntenscanner (standaard actief) -->
           <div id="panel-scan" class="tab-panel actief" role="tabpanel" aria-labelledby="tab-scan">
             <p class="scanner-intro">
-              Kopieer de ingrediëntenlijst van een verpakking en plak deze hieronder. De scanner markeert automatisch alle E-nummers en toont welke EU-allergenen aanwezig zijn.
+              Maak een foto van de ingrediëntenlijst op de verpakking, of plak de tekst hieronder. De scanner markeert automatisch alle E-nummers en toont welke EU-allergenen aanwezig zijn.
             </p>
+
+            <!-- OCR: foto uploaden of camera -->
+            <div class="ocr-sectie">
+              <button type="button" id="ocr-knop" class="btn btn-outline ocr-knop">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                Foto maken of uploaden
+              </button>
+              <input type="file" id="ocr-foto" accept="image/*" capture="environment" class="sr-only" aria-label="Foto van ingrediëntenlijst">
+              <div id="ocr-status" class="ocr-status" hidden></div>
+              <div id="ocr-preview" class="ocr-preview" hidden></div>
+            </div>
+
+            <div class="ocr-scheiding"><span>of typ / plak de tekst</span></div>
+
             <label for="scan-input" class="sr-only">Ingrediëntenlijst</label>
             <textarea
               id="scan-input"
@@ -512,6 +526,7 @@
 
   <script src="assets/js/database.js"></script>
   <script src="assets/js/app.js"></script>
+  <script src="assets/js/ocr.js"></script>
   <script src="assets/js/cookie-banner.js"></script>
 
 </body>

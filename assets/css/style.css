@@ -1097,6 +1097,84 @@ li { margin-bottom: .25rem; }
 .allergenen-sectie { padding: 2rem 0; }
 .stats-divider { display: none; }
 
+/* ── OCR: foto-naar-tekst sectie ───────────────────────────── */
+.ocr-sectie {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  margin-bottom: 1rem;
+}
+
+.ocr-knop {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  align-self: flex-start;
+}
+
+.ocr-knop:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+.ocr-status {
+  font-size: .875rem;
+  padding: .5rem .75rem;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--grijs-3);
+  background: var(--grijs-1);
+  color: var(--grijs-5);
+}
+
+.ocr-status--bezig {
+  border-left-color: var(--groen);
+  color: var(--groen-donker);
+}
+
+.ocr-status--ok {
+  border-left-color: #27ae60;
+  background: #eafaf1;
+  color: #1e8449;
+}
+
+.ocr-status--fout {
+  border-left-color: #e74c3c;
+  background: #fdf2f2;
+  color: #c0392b;
+}
+
+.ocr-preview {
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.ocr-preview-img {
+  display: block;
+  max-width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--grijs-3);
+}
+
+.ocr-scheiding {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin: .75rem 0;
+  color: var(--grijs-4);
+  font-size: .8rem;
+}
+
+.ocr-scheiding::before,
+.ocr-scheiding::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--grijs-3);
+}
+
 /* ── Cookie-toestemmingsbanner ──────────────────────────────── */
 #cookie-banner {
   position: fixed;
