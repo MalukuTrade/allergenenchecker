@@ -549,7 +549,7 @@ li { margin-bottom: .25rem; }
   margin-top: 1.25rem;
 }
 
-.allergen-kaartje {
+.allergen-kaartje, .allergeen-kaart {
   background: var(--wit);
   border: 1.5px solid var(--grijs-3);
   border-radius: var(--radius);
@@ -562,15 +562,16 @@ li { margin-bottom: .25rem; }
   display: block;
 }
 
-.allergen-kaartje:hover {
+.allergen-kaartje:hover, .allergeen-kaart:hover {
   border-color: var(--groen);
   box-shadow: var(--schaduw);
   transform: translateY(-2px);
   text-decoration: none;
 }
 
-.allergen-kaartje .icon { font-size: 2rem; margin-bottom: .35rem; display: block; }
-.allergen-kaartje .naam { font-size: .82rem; font-weight: 600; color: var(--grijs-5); }
+.allergen-kaartje .icon, .allergeen-kaart .allergeen-icoon { font-size: 2rem; margin-bottom: .35rem; display: block; }
+.allergen-kaartje .naam, .allergeen-kaart .allergeen-naam  { font-size: .82rem; font-weight: 600; color: var(--grijs-5); }
+.allergeen-kaart .allergeen-sub { font-size: .75rem; color: var(--grijs-4); margin-top: .1rem; }
 
 /* ── FAQ sectie ────────────────────────────────────────────── */
 .faq-sectie { padding: 3rem 0; }
@@ -1095,3 +1096,63 @@ li { margin-bottom: .25rem; }
 .faq-sectie h2, .faq-sectie .sectie-titel { margin-bottom: 1.5rem; }
 .allergenen-sectie { padding: 2rem 0; }
 .stats-divider { display: none; }
+
+/* ── Cookie-toestemmingsbanner ──────────────────────────────── */
+#cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--wit);
+  border-top: 3px solid var(--groen);
+  padding: 1rem var(--zijmarge);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  z-index: 9999;
+  box-shadow: 0 -4px 16px rgba(0,0,0,.12);
+  animation: cookie-inschuiven .3s ease-out;
+}
+@keyframes cookie-inschuiven {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+#cookie-banner.cookie-banner--verbergen {
+  animation: cookie-uitschuiven .3s ease-in forwards;
+}
+@keyframes cookie-uitschuiven {
+  from { transform: translateY(0); }
+  to   { transform: translateY(100%); }
+}
+.cookie-tekst {
+  flex: 1;
+  min-width: 200px;
+}
+.cookie-tekst strong {
+  display: block;
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--grijs-5);
+  margin-bottom: .2rem;
+}
+.cookie-tekst p {
+  margin: 0;
+  font-size: .82rem;
+  color: var(--grijs-4);
+  line-height: 1.5;
+}
+.cookie-tekst a {
+  color: var(--groen);
+  text-decoration: underline;
+}
+.cookie-knoppen {
+  display: flex;
+  gap: .75rem;
+  flex-shrink: 0;
+}
+@media (max-width: 480px) {
+  #cookie-banner { flex-direction: column; align-items: flex-start; gap: .75rem; }
+  .cookie-knoppen { width: 100%; }
+  .cookie-knoppen .btn { flex: 1; justify-content: center; }
+}
