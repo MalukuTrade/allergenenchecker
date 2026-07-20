@@ -149,14 +149,16 @@ function initZoeker() {
  * type = 'normaal' | 'e-nummer' | 'allergen'
  */
 function scanIngredientenlijst(tekst) {
-  if (!tekst.trim()) return { tokens: [], gevondenENummers: [], gevondenAllergenen: new Set() };
+  if (!tekst.trim()) return { tokens: [], gevondenENummers: [], gevondenAllergenen: new Set(), gevondenIngredienten: [] };
 
   // Splits op komma's, puntkomma's, haakjes en naden maar behoud de scheidingstekens
   const ruwe = tekst.split(/([,;()\[\]]|\s+)/).filter(s => s !== '');
 
   const tokens = [];
   const gevondenENummers = [];
+  const gevondenIngredienten = [];
   const gevondenAllergenen = new Set();
+  const gezieneNummers = new Set(); // deduplicatie E-nummers
 
   for (const stuk of ruwe) {
     const schoon = stuk.trim();
@@ -165,7 +167,7 @@ function scanIngredientenlijst(tekst) {
       continue;
     }
 
-    // Controleer of het een E-nummer is (bijv. E621, e-621, e 621)
+    // 1. Controleer of het een E-nummer is (bijv. E621, e-621, e 621)
     const eNummerMatch = schoon.match(/^e[-\s]?(\d{3,4}[a-z]?)$/i);
     if (eNummerMatch) {
       const genormaliseerd = `E${eNummerMatch[1].toUpperCase()}`;
@@ -174,7 +176,10 @@ function scanIngredientenlijst(tekst) {
         const heeftAllergeen = entry.allergenen.length > 0;
         const type = heeftAllergeen ? 'allergen' : 'e-nummer';
         tokens.push({ tekst: schoon, type, nummer: genormaliseerd, entry });
-        gevondenENummers.push({ nummer: genormaliseerd, entry });
+        if (!gezieneNummers.has(genormaliseerd)) {
+          gevondenENummers.push({ nummer: genormaliseerd, entry });
+          gezieneNummers.add(genormaliseerd);
+        }
         if (heeftAllergeen) {
           entry.allergenen.forEach(a => gevondenAllergenen.add(a));
         }
@@ -182,7 +187,7 @@ function scanIngredientenlijst(tekst) {
       }
     }
 
-    // Controleer op bekende naam/alias in het token
+    // 2. Controleer op bekende naam/alias in ENUM_DATABASE
     const lowerStuk = schoon.toLowerCase();
     let gevonden = false;
     for (const [nummer, entry] of Object.entries(ENUM_DATABASE)) {
@@ -192,7 +197,10 @@ function scanIngredientenlijst(tekst) {
         const heeftAllergeen = entry.allergenen.length > 0;
         const type = heeftAllergeen ? 'allergen' : 'e-nummer';
         tokens.push({ tekst: schoon, type, nummer, entry });
-        gevondenENummers.push({ nummer, entry });
+        if (!gezieneNummers.has(nummer)) {
+          gevondenENummers.push({ nummer, entry });
+          gezieneNummers.add(nummer);
+        }
         if (heeftAllergeen) {
           entry.allergenen.forEach(a => gevondenAllergenen.add(a));
         }
@@ -200,13 +208,23 @@ function scanIngredientenlijst(tekst) {
         break;
       }
     }
+    if (gevonden) continue;
 
-    if (!gevonden) {
-      tokens.push({ tekst: stuk, type: 'normaal' });
+    // 3. Controleer op gangbare ingrediëntnaam uit INGREDIENTEN_ALLERGENEN
+    if (typeof INGREDIENTEN_ALLERGENEN !== 'undefined') {
+      const allergenenVoorIngredient = INGREDIENTEN_ALLERGENEN[lowerStuk];
+      if (allergenenVoorIngredient) {
+        tokens.push({ tekst: schoon, type: 'allergen', ingredientAllergenen: allergenenVoorIngredient });
+        gevondenIngredienten.push({ tekst: schoon, allergenen: allergenenVoorIngredient });
+        allergenenVoorIngredient.forEach(a => gevondenAllergenen.add(a));
+        continue;
+      }
     }
+
+    tokens.push({ tekst: stuk, type: 'normaal' });
   }
 
-  return { tokens, gevondenENummers, gevondenAllergenen };
+  return { tokens, gevondenENummers, gevondenAllergenen, gevondenIngredienten };
 }
 
 function renderScanOutput(tokens) {
@@ -214,29 +232,43 @@ function renderScanOutput(tokens) {
     if (token.type === 'normaal') {
       return `<span class="scan-token normaal">${escapeHtml(token.tekst)}</span>`;
     }
-    const titel = token.entry
-      ? `${token.nummer}: ${token.entry.naam} — ${token.entry.functie}`
-      : token.tekst;
+    let titel;
+    if (token.ingredientAllergenen) {
+      const namen = token.ingredientAllergenen.map(k => ALLERGEN_INFO[k] ? ALLERGEN_INFO[k].naam : k).join(', ');
+      titel = `Allergeen: ${namen}`;
+    } else if (token.entry) {
+      titel = `${token.nummer}: ${token.entry.naam} (${token.entry.functie})`;
+    } else {
+      titel = token.tekst;
+    }
     return `<span class="scan-token ${token.type}" title="${escapeHtml(titel)}">${escapeHtml(token.tekst)}</span>`;
   }).join('');
 }
 
-function renderScanSamenvatting(gevondenENummers, gevondenAllergenen) {
+function renderScanSamenvatting(gevondenENummers, gevondenAllergenen, gevondenIngredienten) {
   const heeftAllergenen = gevondenAllergenen.size > 0;
   const allergeenNamen  = [...gevondenAllergenen].map(key => {
     const info = ALLERGEN_INFO[key];
     return info ? `${info.icon} ${info.naam}` : key;
   });
+  const aantalHerkend = gevondenENummers.length + (gevondenIngredienten ? gevondenIngredienten.length : 0);
 
   let html = `<div class="samenvatting-kaart ${heeftAllergenen ? 'heeft-allergenen' : ''}">`;
 
-  if (gevondenENummers.length === 0) {
-    html += `<p class="samenvatting-titel">✅ Geen E-nummers herkend in deze lijst.</p>`;
+  if (aantalHerkend === 0) {
+    html += `<p class="samenvatting-titel">✅ Geen bekende stoffen of allergenen herkend in deze lijst.</p>`;
   } else {
+    const onderdelen = [];
+    if (gevondenENummers.length > 0) {
+      onderdelen.push(`${gevondenENummers.length} E-nummer${gevondenENummers.length !== 1 ? 's' : ''}`);
+    }
+    if (gevondenIngredienten && gevondenIngredienten.length > 0) {
+      onderdelen.push(`${gevondenIngredienten.length} ingrediënt${gevondenIngredienten.length !== 1 ? 'namen' : 'naam'}`);
+    }
+
     html += `<p class="samenvatting-titel">
       ${heeftAllergenen ? '⚠️' : '✅'}
-      ${gevondenENummers.length} E-nummer${gevondenENummers.length !== 1 ? 's' : ''} herkend
-      ${heeftAllergenen ? `— let op ${gevondenAllergenen.size} EU-allerge${gevondenAllergenen.size !== 1 ? 'nen' : 'en'}` : '— geen EU-allergenen gevonden'}
+      ${onderdelen.join(' en ')} herkend${heeftAllergenen ? `, let op ${gevondenAllergenen.size} EU-allerge${gevondenAllergenen.size !== 1 ? 'nen' : 'een'}` : ', geen EU-allergenen gevonden'}
     </p>`;
 
     if (heeftAllergenen) {
@@ -245,14 +277,23 @@ function renderScanSamenvatting(gevondenENummers, gevondenAllergenen) {
       </div>`;
     }
 
-    html += `<details style="margin-top:.75rem;font-size:.88rem;">
-      <summary style="cursor:pointer;font-weight:600;color:var(--groen);">Bekijk gevonden E-nummers</summary>
-      <ul style="margin-top:.5rem;padding-left:1.25rem;">
-        ${gevondenENummers.map(({ nummer, entry }) =>
-          `<li><strong>${nummer}</strong> — ${escapeHtml(entry.naam)}${entry.allergenen.length ? ` <span style="color:var(--rood)">(⚠️ ${entry.allergenen.map(k => ALLERGEN_INFO[k]?.naam || k).join(', ')})</span>` : ''}</li>`
-        ).join('')}
-      </ul>
-    </details>`;
+    const eNummerItems = gevondenENummers.map(({ nummer, entry }) =>
+      `<li><strong>${nummer}</strong>: ${escapeHtml(entry.naam)}${entry.allergenen.length ? ` <span style="color:var(--rood)">(⚠️ ${entry.allergenen.map(k => ALLERGEN_INFO[k] ? ALLERGEN_INFO[k].naam : k).join(', ')})</span>` : ''}</li>`
+    );
+    const ingredientItems = gevondenIngredienten ? gevondenIngredienten.map(({ tekst, allergenen }) => {
+      const namen = allergenen.map(k => ALLERGEN_INFO[k] ? ALLERGEN_INFO[k].naam : k).join(', ');
+      return `<li><strong>${escapeHtml(tekst)}</strong> <span style="color:var(--rood)">(⚠️ ${namen})</span></li>`;
+    }) : [];
+    const alleItems = [...eNummerItems, ...ingredientItems];
+
+    if (alleItems.length > 0) {
+      html += `<details style="margin-top:.75rem;font-size:.88rem;">
+        <summary style="cursor:pointer;font-weight:600;color:var(--groen);">Bekijk herkende stoffen (${alleItems.length})</summary>
+        <ul style="margin-top:.5rem;padding-left:1.25rem;">
+          ${alleItems.join('')}
+        </ul>
+      </details>`;
+    }
   }
 
   html += `</div>`;
@@ -275,12 +316,12 @@ function initScanner() {
       return;
     }
 
-    const { tokens, gevondenENummers, gevondenAllergenen } = scanIngredientenlijst(tekst);
+    const { tokens, gevondenENummers, gevondenAllergenen, gevondenIngredienten } = scanIngredientenlijst(tekst);
 
     output.innerHTML = renderScanOutput(tokens);
     output.classList.add('zichtbaar');
 
-    samenvatting.innerHTML = renderScanSamenvatting(gevondenENummers, gevondenAllergenen);
+    samenvatting.innerHTML = renderScanSamenvatting(gevondenENummers, gevondenAllergenen, gevondenIngredienten);
     samenvatting.classList.add('zichtbaar');
 
     samenvatting.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
