@@ -277,19 +277,36 @@ function renderScanSamenvatting(gevondenENummers, gevondenAllergenen, gevondenIn
       </div>`;
     }
 
-    const eNummerItems = gevondenENummers.map(({ nummer, entry }) =>
-      `<li><strong>${nummer}</strong>: ${escapeHtml(entry.naam)}${entry.allergenen.length ? ` <span style="color:var(--rood)">(⚠️ ${entry.allergenen.map(k => ALLERGEN_INFO[k] ? ALLERGEN_INFO[k].naam : k).join(', ')})</span>` : ''}</li>`
-    );
+    const eNummerItems = gevondenENummers.map(({ nummer, entry }) => {
+      const allergeenHtml = entry.allergenen.length
+        ? `<span style="color:var(--rood);font-weight:600;font-size:.78rem;">⚠️ ${entry.allergenen.map(k => ALLERGEN_INFO[k] ? ALLERGEN_INFO[k].naam : k).join(', ')}</span>`
+        : `<span style="color:var(--grijs-4);font-size:.78rem;">Geen EU-allergenen</span>`;
+      return `<li style="list-style:none;padding:.7rem .85rem;background:var(--wit);border-radius:6px;border-left:3px solid var(--groen);box-shadow:0 1px 3px rgba(0,0,0,.06);">
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin-bottom:.2rem;">
+          <code style="background:var(--groen-licht);color:var(--groen);padding:.1rem .4rem;border-radius:4px;font-size:.83rem;font-weight:700;">${escapeHtml(nummer)}</code>
+          <strong style="font-size:.9rem;">${escapeHtml(entry.naam)}</strong>
+          ${allergeenHtml}
+        </div>
+        <div style="font-size:.77rem;color:var(--grijs-4);margin-bottom:.3rem;">${escapeHtml(entry.functie)} &middot; ${escapeHtml(entry.herkomst)}</div>
+        <div style="font-size:.83rem;color:var(--tekst);line-height:1.45;">${escapeHtml(entry.info)}</div>
+      </li>`;
+    });
     const ingredientItems = gevondenIngredienten ? gevondenIngredienten.map(({ tekst, allergenen }) => {
-      const namen = allergenen.map(k => ALLERGEN_INFO[k] ? ALLERGEN_INFO[k].naam : k).join(', ');
-      return `<li><strong>${escapeHtml(tekst)}</strong> <span style="color:var(--rood)">(⚠️ ${namen})</span></li>`;
+      const namen = allergenen.map(k => ALLERGEN_INFO[k] ? `${ALLERGEN_INFO[k].icon} ${ALLERGEN_INFO[k].naam}` : k).join(', ');
+      return `<li style="list-style:none;padding:.7rem .85rem;background:var(--wit);border-radius:6px;border-left:3px solid var(--oranje);box-shadow:0 1px 3px rgba(0,0,0,.06);">
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin-bottom:.2rem;">
+          <strong style="color:var(--oranje);font-size:.9rem;">${escapeHtml(tekst)}</strong>
+          <span style="color:var(--rood);font-weight:600;font-size:.78rem;">⚠️ ${namen}</span>
+        </div>
+        <div style="font-size:.77rem;color:var(--grijs-4);">Herkend als allergeen ingrediënt</div>
+      </li>`;
     }) : [];
     const alleItems = [...eNummerItems, ...ingredientItems];
 
     if (alleItems.length > 0) {
-      html += `<details style="margin-top:.75rem;font-size:.88rem;">
-        <summary style="cursor:pointer;font-weight:600;color:var(--groen);">Bekijk herkende stoffen (${alleItems.length})</summary>
-        <ul style="margin-top:.5rem;padding-left:1.25rem;">
+      html += `<details style="margin-top:.75rem;">
+        <summary style="cursor:pointer;font-weight:600;color:var(--groen);font-size:.9rem;">Bekijk herkende stoffen (${alleItems.length})</summary>
+        <ul style="margin:.75rem 0 0;padding:0;display:flex;flex-direction:column;gap:.5rem;">
           ${alleItems.join('')}
         </ul>
       </details>`;
