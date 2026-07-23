@@ -584,30 +584,7 @@
     });
   })();
 
-  // FAQ accordion
-  (function () {
-    var vragen = document.querySelectorAll('.faq-vraag');
-    vragen.forEach(function (vraag) {
-      vraag.addEventListener('click', function () {
-        var antwoord = this.nextElementSibling;
-        var isOpen = antwoord.classList.contains('open');
 
-        // Sluit alle andere items
-        document.querySelectorAll('.faq-antwoord.open').forEach(function (el) {
-          el.classList.remove('open');
-          el.previousElementSibling.classList.remove('open');
-          el.previousElementSibling.setAttribute('aria-expanded', 'false');
-        });
-
-        // Toggle huidig item
-        if (!isOpen) {
-          antwoord.classList.add('open');
-          this.classList.add('open');
-          this.setAttribute('aria-expanded', 'true');
-        }
-      });
-    });
-  })();
 </script>
 
 </body>
