@@ -608,7 +608,7 @@
         <div class="faq-lijst" style="margin-top:1.5rem;">
 
           <div class="faq-item">
-            <button class="faq-vraag" onclick="toggleFaq(this)" aria-expanded="false">
+            <button class="faq-vraag" aria-expanded="false">
               Welke 14 allergenen zijn verplicht te vermelden in de EU?
               <span class="faq-icoontje" aria-hidden="true">+</span>
             </button>
@@ -620,7 +620,7 @@
           </div>
 
           <div class="faq-item">
-            <button class="faq-vraag" onclick="toggleFaq(this)" aria-expanded="false">
+            <button class="faq-vraag" aria-expanded="false">
               Is "kan sporen bevatten van..." een wettelijke verplichting?
               <span class="faq-icoontje" aria-hidden="true">+</span>
             </button>
@@ -632,7 +632,7 @@
           </div>
 
           <div class="faq-item">
-            <button class="faq-vraag" onclick="toggleFaq(this)" aria-expanded="false">
+            <button class="faq-vraag" aria-expanded="false">
               Hoe moeten allergenen worden aangegeven op een etiket?
               <span class="faq-icoontje" aria-hidden="true">+</span>
             </button>
@@ -644,7 +644,7 @@
           </div>
 
           <div class="faq-item">
-            <button class="faq-vraag" onclick="toggleFaq(this)" aria-expanded="false">
+            <button class="faq-vraag" aria-expanded="false">
               Hoeveel wettelijke allergenen zijn er?
               <span class="faq-icoontje" aria-hidden="true">+</span>
             </button>
@@ -656,7 +656,7 @@
           </div>
 
           <div class="faq-item">
-            <button class="faq-vraag" onclick="toggleFaq(this)" aria-expanded="false">
+            <button class="faq-vraag" aria-expanded="false">
               Wat zijn de 14 soorten allergenen?
               <span class="faq-icoontje" aria-hidden="true">+</span>
             </button>
@@ -668,7 +668,7 @@
           </div>
 
           <div class="faq-item">
-            <button class="faq-vraag" onclick="toggleFaq(this)" aria-expanded="false">
+            <button class="faq-vraag" aria-expanded="false">
               Welke allergenen moet ik vermelden als horecaondernemer?
               <span class="faq-icoontje" aria-hidden="true">+</span>
             </button>
@@ -680,7 +680,7 @@
           </div>
 
           <div class="faq-item">
-            <button class="faq-vraag" onclick="toggleFaq(this)" aria-expanded="false">
+            <button class="faq-vraag" aria-expanded="false">
               Is vetsin (MSG) een allergeen?
               <span class="faq-icoontje" aria-hidden="true">+</span>
             </button>
@@ -791,13 +791,6 @@
       btn.setAttribute('aria-expanded', isOpen);
     }
 
-    // FAQ accordion
-    function toggleFaq(btn) {
-      const antwoord = btn.nextElementSibling;
-      const isOpen = antwoord.classList.toggle('open');
-      btn.classList.toggle('open', isOpen);
-      btn.setAttribute('aria-expanded', isOpen);
-    }
   </script>
 </body>
 </html>

@@ -366,15 +366,18 @@ function initFAQ() {
       const antwoord = knop.nextElementSibling;
       const isOpen   = antwoord.classList.contains('open');
 
-      // Sluit alle andere items
+      // Sluit alle open items
       document.querySelectorAll('.faq-antwoord.open').forEach(el => {
         el.classList.remove('open');
-        el.previousElementSibling.classList.remove('open');
+        const btn = el.previousElementSibling;
+        btn.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
       });
 
       if (!isOpen) {
         antwoord.classList.add('open');
         knop.classList.add('open');
+        knop.setAttribute('aria-expanded', 'true');
       }
     });
   });
